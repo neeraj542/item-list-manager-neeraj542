@@ -13,7 +13,7 @@ function ItemListManager() {
 
         if (authCode) {
             // Exchange the auth code for an access token
-            axios.get(`${import.meta.env.VITE_API_BASE_URL}/api/exchange-token`, {
+            axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/exchange-token`, {
                 params: {
                     code: authCode
                 }
