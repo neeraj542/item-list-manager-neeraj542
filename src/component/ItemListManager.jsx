@@ -10,6 +10,7 @@ function ItemListManager() {
         // Check if there's an auth code in the URL
         const params = new URLSearchParams(window.location.search);
         const authCode = params.get('code');
+        // console.log("authCode ", authCode);
 
         if (authCode) {
             // Step 1: Exchange auth code for short-lived token
@@ -71,7 +72,7 @@ function ItemListManager() {
                     <li key={index}>{item}</li>
                 ))}
             </ul>
-            {accessToken && <p>Access Token: {accessToken}</p>}
+            {accessToken && <p className="access-token-box">Access Token: {accessToken}</p>}
         </div>
     );
 }
