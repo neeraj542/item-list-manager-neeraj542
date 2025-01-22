@@ -10,11 +10,11 @@ function ItemListManager() {
         // Check if there's an auth code in the URL
         const params = new URLSearchParams(window.location.search);
         const authCode = params.get('code');
-        console.log("authCode ", authCode);
+        // console.log("authCode ", authCode);
 
         if (authCode) {
             // Exchange the auth code for an access token
-            axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/exchange-token1`, {
+            axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/exchange-token`, {
                 params: {
                     code: authCode
                 }
