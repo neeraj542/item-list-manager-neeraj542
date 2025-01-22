@@ -10,6 +10,7 @@ function ItemListManager() {
         // Check if there's an auth code in the URL
         const params = new URLSearchParams(window.location.search);
         const authCode = params.get('code');
+        console.log("authCode ", authCode);
 
         if (authCode) {
             // Exchange the auth code for an access token
