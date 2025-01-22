@@ -10,15 +10,18 @@ function ItemListManager() {
         // Check if there's an auth code in the URL
         const params = new URLSearchParams(window.location.search);
         const authCode = params.get('code');
-        // console.log("authCode ", authCode);
 
         if (authCode) {
+            console.log("Auth Code Retrieved from URL:", authCode);
+
             // Step 1: Exchange auth code for short-lived token
             axios
                 .get(`${import.meta.env.VITE_BACKEND_URL}/api/exchange-token`, {
                     params: { code: authCode },
                 })
                 .then((response) => {
+                    console.log("Short-Lived Token Response:", response.data);
+
                     const shortLivedToken = response.data.access_token;
 
                     // Step 2: Exchange short-lived token for long-lived token
@@ -30,6 +33,8 @@ function ItemListManager() {
                     );
                 })
                 .then((response) => {
+                    console.log("Long-Lived Token Response:", response.data);
+
                     // Save the long-lived token
                     setAccessToken(response.data.access_token);
 
@@ -37,7 +42,7 @@ function ItemListManager() {
                     window.history.replaceState({}, document.title, window.location.pathname);
                 })
                 .catch((error) => {
-                    console.error('Failed to get long-lived token:', error);
+                    console.error("Failed to get token:", error.response?.data || error.message);
                 });
         }
     }, []);
@@ -72,7 +77,11 @@ function ItemListManager() {
                     <li key={index}>{item}</li>
                 ))}
             </ul>
-            {accessToken && <p className="access-token-box"><b>Access Token: </b> {accessToken}</p>}
+            {accessToken && (
+                <p className="access-token-box">
+                    <b>Access Token:</b> {accessToken}
+                </p>
+            )}
         </div>
     );
 }
