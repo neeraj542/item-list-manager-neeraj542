@@ -72,7 +72,7 @@ function ItemListManager() {
                     <li key={index}>{item}</li>
                 ))}
             </ul>
-            {accessToken && <p className="access-token-box">Access Token: {accessToken}</p>}
+            {accessToken && <p className="access-token-box"><b>Access Token: </b> {accessToken}</p>}
         </div>
     );
 }
