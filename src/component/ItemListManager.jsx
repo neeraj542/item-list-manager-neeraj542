@@ -10,25 +10,34 @@ function ItemListManager() {
         // Check if there's an auth code in the URL
         const params = new URLSearchParams(window.location.search);
         const authCode = params.get('code');
-        // console.log("authCode ", authCode);
 
         if (authCode) {
-            // Exchange the auth code for an access token
-            axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/exchange-token`, {
-                params: {
-                    code: authCode
-                }
-            })
-            .then(response => {
-                // Assuming response.data contains the access token
-                setAccessToken(response.data.access_token);
-                console.log('Access Token:', response.data.access_token);
-                // Optionally, clear the URL after processing
-                window.history.replaceState({}, document.title, window.location.pathname);
-            })
-            .catch(error => {
-                console.error('Failed to exchange token:', error);
-            });
+            // Step 1: Exchange auth code for short-lived token
+            axios
+                .get(`${import.meta.env.VITE_BACKEND_URL}/api/exchange-token`, {
+                    params: { code: authCode },
+                })
+                .then((response) => {
+                    const shortLivedToken = response.data.access_token;
+
+                    // Step 2: Exchange short-lived token for long-lived token
+                    return axios.get(
+                        `${import.meta.env.VITE_BACKEND_URL}/api/exchange-long-lived-token`,
+                        {
+                            params: { access_token: shortLivedToken },
+                        }
+                    );
+                })
+                .then((response) => {
+                    // Save the long-lived token
+                    setAccessToken(response.data.access_token);
+
+                    // Optionally clear the URL after processing
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                })
+                .catch((error) => {
+                    console.error('Failed to get long-lived token:', error);
+                });
         }
     }, []);
 
