@@ -37,7 +37,13 @@ ul {
   list-style-type: disc; /* Add bullets to the list */
   padding-left: 20px;
 }
-
+.access-token-box {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+}
 li {
   margin-bottom: 5px;
 }
