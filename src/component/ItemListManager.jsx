@@ -5,6 +5,7 @@ function ItemListManager() {
     const [items, setItems] = useState([]);
     const [newItem, setNewItem] = useState('');
     const [accessToken, setAccessToken] = useState(null);
+    const [lambdaResponse, setLambdaResponse] = useState(null);
 
     useEffect(() => {
         // Check if there's an auth code in the URL
@@ -24,7 +25,7 @@ function ItemListManager() {
 
                     const shortLivedToken = response.data.access_token;
 
-                    // Step 2: Exchange short-lived token for long-lived token
+                    // Step 2: Exchange short-lived token for long-lived token and Lambda response
                     return axios.get(
                         `${import.meta.env.VITE_BACKEND_URL}/api/exchange-long-lived-token`,
                         {
@@ -35,8 +36,9 @@ function ItemListManager() {
                 .then((response) => {
                     console.log("Long-Lived Token Response:", response.data);
 
-                    // Save the long-lived token
-                    setAccessToken(response.data.access_token);
+                    // Save the long-lived token and Lambda response
+                    setAccessToken(response.data.longLivedToken.access_token);
+                    setLambdaResponse(response.data.lambdaResponse);
 
                     // Optionally clear the URL after processing
                     window.history.replaceState({}, document.title, window.location.pathname);
@@ -78,9 +80,16 @@ function ItemListManager() {
                 ))}
             </ul>
             {accessToken && (
-                <p className="access-token-box">
-                    <b>Access Token:</b> {accessToken}
-                </p>
+                <div className="response-box">
+                    <p>
+                        <b>Access Token:</b> {accessToken}
+                    </p>
+                    {lambdaResponse && (
+                        <p>
+                            <b>Lambda Response:</b> {JSON.stringify(lambdaResponse)}
+                        </p>
+                    )}
+                </div>
             )}
         </div>
     );
