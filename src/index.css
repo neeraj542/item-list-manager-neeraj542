@@ -1,43 +1,130 @@
+/* General container styles */
 .container {
-  max-width: 400px;
+  max-width: 500px; /* Increased width for better spacing */
   margin: 0 auto;
   padding: 20px;
-  background-color: #f0f0f0;
-  border-radius: 5px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
 
+/* Center alignment for content */
 .center-container {
   text-align: center;
 }
 
+/* Styling for the input and button section */
 .input-container {
   display: flex;
   justify-content: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 input {
   flex-grow: 1;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 5px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.3s ease-in-out;
 }
 
+input:focus {
+  border-color: #4CAF50; /* Highlight border color on focus */
+}
+
+/* Button styling */
 button {
-  padding: 10px 15px;
-  margin-left: 5px;
+  padding: 12px 18px;
+  margin-left: 10px;
   background-color: #4CAF50;
   color: white;
   border: none;
-  border-radius: 3px;
+  border-radius: 5px;
   cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease-in-out;
 }
 
+button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+button:active {
+  background-color: #388e3c; /* Darker green when clicked */
+}
+
+/* List styling */
 ul {
-  list-style-type: disc; /* Add bullets to the list */
+  list-style-type: disc; /* Bullets for the list */
   padding-left: 20px;
+  margin-top: 15px;
 }
 
 li {
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  font-size: 16px;
+  color: #333; /* Darker text color for better contrast */
+}
+
+/* Styling for the access token and lambda response section */
+.response-box {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f4f4f4;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.response-box p {
+  margin: 10px 0;
+  font-size: 14px;
+  color: #444;
+}
+
+/* Access token box styling */
+.access-token-box {
+  padding: 12px;
+  background-color: #e8f5e9; /* Light green background */
+  border: 1px solid #4CAF50; /* Green border */
+  border-radius: 5px;
+  font-size: 14px;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  margin-top: 15px;
+}
+
+.access-token-box b {
+  font-weight: bold;
+}
+
+.access-token-box p {
+  margin: 0;
+  padding: 5px 0;
+  color: #333;
+  font-size: 14px;
+}
+
+/* Lambda response box styling */
+.lambda-response-box {
+  padding: 12px;
+  background-color: #e3f2fd; /* Light blue background */
+  border: 1px solid #1976d2; /* Blue border */
+  border-radius: 5px;
+  font-size: 14px;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  margin-top: 15px;
+}
+
+.lambda-response-box b {
+  font-weight: bold;
+}
+
+.lambda-response-box p {
+  margin: 0;
+  padding: 5px 0;
+  color: #333;
+  font-size: 14px;
 }
