@@ -8,47 +8,46 @@ function ItemListManager() {
     const [lambdaResponse, setLambdaResponse] = useState(null);
 
     useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const authCode = params.get('code');
+        // Check if there's an auth code in the URL
+        const params = new URLSearchParams(window.location.search);
+        const authCode = params.get('code');
 
-    if (authCode) {
-        console.log("Auth Code Retrieved from URL:", authCode);
+        if (authCode) {
+            console.log("Auth Code Retrieved from URL:", authCode);
 
-        axios
-            .get(`${import.meta.env.VITE_BACKEND_URL}/api/exchange-token`, {
-                params: { code: authCode },
-            })
-            .then((response) => {
-                console.log("Short-Lived Token Response:", response.data);
+            // Step 1: Exchange auth code for short-lived token
+            axios
+                .get(`${import.meta.env.VITE_BACKEND_URL}/api/exchange-token`, {
+                    params: { code: authCode },
+                })
+                .then((response) => {
+                    console.log("Short-Lived Token Response:", response.data);
 
-                if (!response.data.access_token) {
-                    throw new Error("Access token is missing in the response.");
-                }
+                    const shortLivedToken = response.data.access_token;
 
-                const shortLivedToken = response.data.access_token;
+                    // Step 2: Exchange short-lived token for long-lived token and Lambda response
+                    return axios.get(
+                        `${import.meta.env.VITE_BACKEND_URL}/api/exchange-long-lived-token`,
+                        {
+                            params: { access_token: shortLivedToken },
+                        }
+                    );
+                })
+                .then((response) => {
+                    console.log("Long-Lived Token Response:", response.data);
 
-                return axios.get(
-                    `${import.meta.env.VITE_BACKEND_URL}/api/exchange-long-lived-token`,
-                    {
-                        params: { access_token: shortLivedToken },
-                    }
-                );
-            })
-            .then((response) => {
-                console.log("Long-Lived Token Response:", response.data);
+                    // Save the long-lived token and Lambda response
+                    setAccessToken(response.data.longLivedToken.access_token);
+                    setLambdaResponse(response.data.lambdaResponse);
 
-                setAccessToken(response.data.longLivedToken.access_token);
-                setLambdaResponse(response.data.lambdaResponse);
-
-                window.history.replaceState({}, document.title, window.location.pathname);
-            })
-            .catch((error) => {
-                console.error("Failed to get token:", error.response?.data || error.message);
-                alert("An error occurred while processing the request. Please try again.");
-            });
-    }
-}, []);
-
+                    // Optionally clear the URL after processing
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                })
+                .catch((error) => {
+                    console.error("Failed to get token:", error.response?.data || error.message);
+                });
+        }
+    }, []);
 
     const handleInputChange = (event) => {
         setNewItem(event.target.value);

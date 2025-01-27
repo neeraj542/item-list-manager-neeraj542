@@ -1,7 +1,10 @@
 .container {
   max-width: 400px;
+  max-width: 400px;
   margin: 0 auto;
   padding: 20px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
   background-color: #f0f0f0;
   border-radius: 5px;
 }
@@ -14,10 +17,12 @@
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 input {
   flex-grow: 1;
+  padding: 10px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 3px;
@@ -26,23 +31,30 @@ input {
 button {
   padding: 10px 15px;
   margin-left: 5px;
+  padding: 10px 15px;
+  margin-left: 5px;
   background-color: #4CAF50;
   color: white;
   border: none;
+  border-radius: 3px;
   border-radius: 3px;
   cursor: pointer;
 }
 
 ul {
   list-style-type: disc; /* Add bullets to the list */
+  list-style-type: disc; /* Add bullets to the list */
   padding-left: 20px;
 }
 
 li {
   margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .response-box {
+  border: 1px solid #ccc;
+  padding: 15px;
   border: 1px solid #ccc;
   padding: 15px;
   margin-top: 20px;
