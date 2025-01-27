@@ -93,6 +93,6 @@ function ItemListManager() {
             )}
         </div>
     );
-}
+}   
 
 export default ItemListManager;
