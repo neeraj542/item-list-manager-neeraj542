@@ -49,6 +49,9 @@ function ItemListManager() {
                 });
         }
     }, []);
+    useEffect(() => {
+        console.log("Lambda Response:", lambdaResponse);
+    }, [lambdaResponse]);
 
     const handleInputChange = (event) => {
         setNewItem(event.target.value);
