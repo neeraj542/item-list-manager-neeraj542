@@ -16,6 +16,7 @@ function ItemListManager() {
             console.log("Auth Code Retrieved from URL:", authCode);
 
             // Step 1: Exchange auth code for short-lived token
+            console.log ("Backend URL:", import.meta.env.VITE_BACKEND_URL);
             axios
                 .get(`${import.meta.env.VITE_BACKEND_URL}/api/exchange-token`, {
                     params: { code: authCode },
